@@ -1,18 +1,22 @@
-WORLD_DATA = 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv';
-BRAZIL_POPULATION = 212000000;
+const WORLD_DATA = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv";
+const LOCATION_NAME = "Brazil";
+const LOCATION_POPULATION = 212000000;
+const CSV_SEPARATOR = ",";
+const MOVING_AVG_DAYS = 3;
 
-filterResults = function(csv, location) {
-    var countryFilter = new RegExp((location + ".*"), "gi");
-    var rows = [];
+const filterResults = function(csv, location) {
+    const countryFilter = new RegExp((location + ".*"), "gi");
+    const rows = [];
 
+    let arrMatches;
     while (arrMatches = countryFilter.exec(csv)) {
         rows.push(parseResults(arrMatches[0]));
     }
     return rows;
 };
 
-parseResults = function(row) {
-    fields = row.split(",");
+const parseResults = function(row) {
+    const fields = row.split(CSV_SEPARATOR);
     return {
         "location": fields[0],
         "iso_code": fields[1],
@@ -29,39 +33,36 @@ parseResults = function(row) {
     };
 };
 
-daysBetween = function(date1, date2) {
-    var time = new Date(date2).getTime() - new Date(date1).getTime();
+const daysBetween = function(date1, date2) {
+    const time = new Date(date2).getTime() - new Date(date1).getTime();
     return time / (1000 * 3600 * 24);
 };
 
-movingAvg = function(data, field, period) {
-    var sum = 0;
-    var start = data.length - period;
-    for (i = start; i < data.length; i++) {
+const movingAvg = function(data, field, period) {
+    let sum = 0;
+    const start = data.length - period;
+    for (let i = start; i < data.length; i++) {
         sum += parseInt(data[i][field]);
     }
     return sum / period;
 };
 
-formatNumber = function(numString) {
+const formatNumber = function(numString) {
     return parseFloat(numString).toLocaleString();
-}
+};
 
 fetch(WORLD_DATA)
-    .then(function(response) {
-        return response.text();
-    })
-    .then(function(text) {
-        var parsedResults = filterResults(text, 'Brazil');
-        console.log(parsedResults);
+    .then(response => response.text())
+    .then(text => {
+        const parsedResults = filterResults(text, LOCATION_NAME);
 
-        var firstData = parsedResults[0];
-        var lastData = parsedResults[parsedResults.length - 1];
+        const firstData = parsedResults[0];
+        const lastData = parsedResults[parsedResults.length - 1];
 
-        var movingAvgDaily = movingAvg(parsedResults, 'daily_vaccinations', 3);
+        const movingAvgDaily = movingAvg(parsedResults, "daily_vaccinations", MOVING_AVG_DAYS);
 
-        var timespan = daysBetween(firstData.date, lastData.date);
-        var projection = Math.trunc((BRAZIL_POPULATION - lastData.people_vaccinated) / movingAvgDaily);
+        const timespan = daysBetween(firstData.date, lastData.date);
+        const projection = Math.trunc((LOCATION_POPULATION - lastData.people_vaccinated) / movingAvgDaily);
 
         document.querySelector("#vaccinated-num").textContent = formatNumber(lastData.people_vaccinated);
         document.querySelector("#vaccinated-percent").textContent = formatNumber(lastData.people_vaccinated_per_hundred);
