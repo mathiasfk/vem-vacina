@@ -1,0 +1,20 @@
+body {
+    background-color: lightblue;
+}
+
+.main-div {
+    text-align: center;
+}
+
+.text-big {
+    font-size: 24px;
+}
+
+span {
+    font-weight: bold;
+}
+
+p {
+    font-family: verdana;
+    font-size: 18px;
+}
