@@ -9,7 +9,7 @@ filterResults = function(csv, location) {
         rows.push(parseResults(arrMatches[0]));
     }
     return rows;
-}
+};
 
 parseResults = function(row) {
     fields = row.split(",");
@@ -27,12 +27,12 @@ parseResults = function(row) {
         "people_fully_vaccinated_per_hundred": fields[10],
         "daily_vaccinations_per_million": fields[11],
     };
-}
+};
 
 daysBetween = function(date1, date2) {
     var time = new Date(date2).getTime() - new Date(date1).getTime();
     return time / (1000 * 3600 * 24);
-}
+};
 
 movingAvg = function(data, field, period) {
     var sum = 0;
@@ -41,6 +41,10 @@ movingAvg = function(data, field, period) {
         sum += parseInt(data[i][field]);
     }
     return sum / period;
+};
+
+formatNumber = function(numString) {
+    return parseFloat(numString).toLocaleString();
 }
 
 fetch(WORLD_DATA)
@@ -59,8 +63,8 @@ fetch(WORLD_DATA)
         var timespan = daysBetween(firstData.date, lastData.date);
         var projection = Math.trunc((BRAZIL_POPULATION - lastData.people_vaccinated) / movingAvgDaily);
 
-        document.querySelector("#vaccinated-num").textContent = lastData.people_vaccinated;
-        document.querySelector("#vaccinated-percent").textContent = lastData.people_vaccinated_per_hundred;
+        document.querySelector("#vaccinated-num").textContent = formatNumber(lastData.people_vaccinated);
+        document.querySelector("#vaccinated-percent").textContent = formatNumber(lastData.people_vaccinated_per_hundred);
         document.querySelector("#vaccination-period").textContent = timespan;
         document.querySelector("#projected-period").textContent = projection;
     });
