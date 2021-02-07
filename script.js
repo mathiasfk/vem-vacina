@@ -3,6 +3,7 @@ const LOCATION_NAME = "Brazil";
 const LOCATION_POPULATION = 212000000;
 const CSV_SEPARATOR = ",";
 const MOVING_AVG_DAYS = 3;
+const MILLISECONDS_IN_A_DAY = 1000 * 3600 * 24;
 
 const filterResults = function(csv, location) {
     const countryFilter = new RegExp((location + ".*"), "gi");
@@ -35,15 +36,15 @@ const parseResults = function(row) {
 
 const daysBetween = function(date1, date2) {
     const time = new Date(date2).getTime() - new Date(date1).getTime();
-    return time / (1000 * 3600 * 24);
+    return time / MILLISECONDS_IN_A_DAY;
 };
 
 const movingAvg = function(data, field, period) {
-    let sum = 0;
-    const start = data.length - period;
-    for (let i = start; i < data.length; i++) {
-        sum += parseInt(data[i][field]);
-    }
+    const recentData = data.slice(-period);
+    const sum = recentData.reduce(
+        (sum, each) => sum + parseInt(each[field]), 
+    0);
+
     return sum / period;
 };
 
