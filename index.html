@@ -15,18 +15,22 @@
 <body>
     <div class="main-div">
         <p class="text-big">Foram vacinadas
-            <span id="vaccinated-num">carregando...</span> pessoas
+            <strong id="vaccinated-num">carregando...</strong> pessoas<sup>[1]</sup>
         </p>
         <p>contra COVID-19 no Brasil.</p>
         <p>
-            <span id="vaccinated-percent">carregando...</span>% da população em
-            <span id="vaccination-period">carregando...</span> dias.
+            <strong id="vaccinated-percent">carregando...</strong>% da população em
+            <strong id="vaccination-period">carregando...</strong> dias.
         </p>
         <p>
-            Se a velocidade atual for mantida, vai demorar mais
-            <span class="text-big" id="projected-period">carregando...</span> dias para vacinar 100% da população.
+            Se a velocidade atual<sup>[2]</sup> for mantida, vai demorar mais
+            <strong class="text-big" id="projected-period">carregando...</strong> dias para vacinar 100% da população.
         </p>
     </div>
+    <footer>
+        [1] https://ourworldindata.org/. Dados referentes ao dia <span id="last-available-day">carregando...</span><br>
+        [2] Considerada a média dos últimos <span id="moving-avg-days">carregando...</span> dias
+    </footer>
 </body>
 <script src="script.js"></script>
 <script>

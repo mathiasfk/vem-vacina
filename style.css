@@ -10,11 +10,20 @@ body {
     font-size: 24px;
 }
 
-span {
-    font-weight: bold;
-}
-
 p {
     font-family: verdana;
     font-size: 18px;
+}
+
+footer {
+    padding-top: 2em;
+    text-align: center;
+    font-family: verdana;
+    font-size: 12px;
+    color: lightslategray;
+}
+
+sup {
+    font-size: 12px;
+    color: lightslategray;
 }

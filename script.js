@@ -51,6 +51,11 @@ const formatNumber = function(numString) {
     return parseFloat(numString).toLocaleString();
 };
 
+const formatDate = function(dateString) {
+    const timezone = new Date().toTimeString().slice(12, 17);
+    return new Date(dateString + "T00:00:00" + timezone).toLocaleDateString()
+}
+
 fetch(WORLD_DATA)
     .then(response => response.text())
     .then(text => {
@@ -68,4 +73,6 @@ fetch(WORLD_DATA)
         document.querySelector("#vaccinated-percent").textContent = formatNumber(lastData.people_vaccinated_per_hundred);
         document.querySelector("#vaccination-period").textContent = timespan;
         document.querySelector("#projected-period").textContent = projection;
+        document.querySelector("#last-available-day").textContent = formatDate(lastData.date);
+        document.querySelector("#moving-avg-days").textContent = MOVING_AVG_DAYS;
     });
