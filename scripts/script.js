@@ -2,7 +2,7 @@ const WORLD_DATA = "https://raw.githubusercontent.com/owid/covid-19-data/master/
 const LOCATION_NAME = "Brazil";
 const LOCATION_POPULATION = 212000000;
 const CSV_SEPARATOR = ",";
-const MOVING_AVG_DAYS = 3;
+const MOVING_AVG_DAYS = 5;
 const MILLISECONDS_IN_A_DAY = 1000 * 3600 * 24;
 
 const filterResults = function(csv, location) {
@@ -55,7 +55,7 @@ const formatNumber = function(numString) {
 const formatDate = function(dateString) {
     const timezone = new Date().toTimeString().slice(12, 17);
     return new Date(dateString + "T00:00:00" + timezone).toLocaleDateString()
-}
+};
 
 fetch(WORLD_DATA)
     .then(response => response.text())
@@ -76,4 +76,7 @@ fetch(WORLD_DATA)
         document.querySelector("#projected-period").textContent = projection;
         document.querySelector("#last-available-day").textContent = formatDate(lastData.date);
         document.querySelector("#moving-avg-days").textContent = MOVING_AVG_DAYS;
+
+        plotChart(parsedResults, "daily_vaccinations", "Vacinações no dia");
+        plotChart(parsedResults, "people_vaccinated", "Total de vacinados");
     });

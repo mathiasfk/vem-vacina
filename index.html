@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
     <title>Vem vacina - vacinação de COVID-19 no Brasil</title>
     <meta name="description" content="Acompanhe o andamento da vacinação de COVID-19 no Brasil e a projeção de duração."></meta>
-    <link rel="icon" type="image/png" href="favicon-96x96.png" />
+    <link rel="icon" type="image/png" href="images/favicon-96x96.png" />
 </head>
 
 <noscript>Você precisa de javascript para ver essa página.</noscript>
@@ -26,13 +26,21 @@
             Se a velocidade atual<sup>[2]</sup> for mantida, vai demorar mais
             <strong class="text-big" id="projected-period">carregando...</strong> dias para vacinar 100% da população.
         </p>
+        <br>
+        <p align="center">
+            <canvas id="chart-daily-vaccinations" width="400" height="200" align="center">No canvas support</canvas>
+            <br>
+            <canvas id="chart-people-vaccinated" width="400" height="200" align="center">No canvas support</canvas>
+        </p>
     </div>
     <footer>
         [1] https://ourworldindata.org/. Dados referentes ao dia <span id="last-available-day">carregando...</span><br>
         [2] Considerada a média dos últimos <span id="moving-avg-days">carregando...</span> dias
     </footer>
 </body>
-<script src="script.js"></script>
+<script src="scripts/Chart.bundle.min.js"></script>
+<script src="scripts/charts.js"></script>
+<script src="scripts/script.js"></script>
 <script>
     var clicky_site_ids = clicky_site_ids || [];
     clicky_site_ids.push(101300114);

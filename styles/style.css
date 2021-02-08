@@ -27,3 +27,9 @@ sup {
     font-size: 12px;
     color: lightslategray;
 }
+
+@media only screen and (min-width: 1024px) {
+    canvas {
+        max-width: 50%;
+    }
+}
