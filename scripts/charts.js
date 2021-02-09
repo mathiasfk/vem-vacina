@@ -2,17 +2,17 @@ const getFieldArray = function(data, field) {
     return data.map(each => each[field]);
 }
 
-const plotChart = function(data, field, label) {
-    const ctx = document.getElementById("chart-" + field.replace("_","-")).getContext("2d");
+const plotChart = function(chartId, data, fields) {
+    const ctx = document.getElementById(chartId).getContext("2d");
     new Chart(ctx, {
       type: "line",
       data: {
         labels: getFieldArray(data,"date"),
-        datasets: [{
-          label: label,
-          data: getFieldArray(data, field),
-          borderColor: "black",
-        }]
+        datasets: fields.map(each => ({
+          label: each.label,
+          data: getFieldArray(data, each.field),
+          borderColor: each.color,
+        }))
       },
       options: {
         scales: {
