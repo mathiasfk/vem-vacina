@@ -77,7 +77,10 @@ fetch(WORLD_DATA)
         document.querySelector("#last-available-day").textContent = formatDate(lastData.date);
         document.querySelector("#moving-avg-days").textContent = MOVING_AVG_DAYS;
 
-        plotChart("chart-daily", parsedResults, [{ field:"daily_vaccinations", label:"Vacinações no dia", color:"black" }]);
+        plotChart("chart-daily", parsedResults, [
+            { field:"daily_vaccinations_raw", label:"Vacinações no dia", color:"black" },
+            { field:"daily_vaccinations", label:"Média móvel", color:"green" }
+        ]);
         plotChart("chart-total", parsedResults, [
             { field:"people_vaccinated", label:"Total de vacinados (1ª dose)", color:"black" },
             { field:"people_fully_vaccinated", label:"Total de vacinados (2ª dose)", color:"green" }
