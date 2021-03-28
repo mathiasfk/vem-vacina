@@ -21,7 +21,8 @@ const plotChart = function(chartId, data, fields) {
               beginAtZero: true
             }
           }]
-        }
+        },
+        spanGaps: true
       }
     });
 };
