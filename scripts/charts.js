@@ -19,6 +19,7 @@ const plotChart = function(chartId, data, fields) {
           yAxes: [{
             ticks: {
               beginAtZero: true,
+              maxTicksLimit: 7,
               callback: function(value, index, values) {
                 return value.toLocaleString();
               }
