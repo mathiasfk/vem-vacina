@@ -18,11 +18,27 @@ const plotChart = function(chartId, data, fields) {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              callback: function(value, index, values) {
+                return value.toLocaleString();
+              }
             }
           }]
         },
-        spanGaps: true
-      }
+        spanGaps: true,
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel.toLocaleString();
+            },
+            labelColor: function(tooltipItem, chart) {
+              return {
+                  borderColor: chart.config.data.datasets[tooltipItem.datasetIndex].borderColor,
+                  backgroundColor: chart.config.data.datasets[tooltipItem.datasetIndex].borderColor,
+              };
+            },
+          }
+        }
+      },
     });
 };
