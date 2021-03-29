@@ -39,15 +39,6 @@ const daysBetween = function(date1, date2) {
     return time / MILLISECONDS_IN_A_DAY;
 };
 
-const movingAvg = function(data, field, period) {
-    const recentData = data.slice(-period);
-    const sum = recentData.reduce(
-        (sum, each) => sum + parseInt(each[field]), 
-    0);
-
-    return sum / period;
-};
-
 const formatNumber = function(numString) {
     return parseFloat(numString).toLocaleString();
 };
@@ -65,17 +56,12 @@ fetch(WORLD_DATA)
         const firstData = parsedResults[0];
         const lastData = parsedResults[parsedResults.length - 1];
 
-        const movingAvgDaily = movingAvg(parsedResults, "daily_vaccinations", MOVING_AVG_DAYS);
-
         const timespan = daysBetween(firstData.date, lastData.date);
-        const projection = Math.trunc((LOCATION_POPULATION - lastData.people_vaccinated) / movingAvgDaily);
 
         document.querySelector("#vaccinated-num").textContent = formatNumber(lastData.people_vaccinated);
         document.querySelector("#vaccinated-percent").textContent = formatNumber(lastData.people_vaccinated_per_hundred);
         document.querySelector("#vaccination-period").textContent = timespan;
-        document.querySelector("#projected-period").textContent = projection;
         document.querySelector("#last-available-day").textContent = formatDate(lastData.date);
-        document.querySelector("#moving-avg-days").textContent = MOVING_AVG_DAYS;
 
         plotChart("chart-daily", parsedResults, [
             { field:"daily_vaccinations_raw", label:"Vacinações no dia", color:"black" },
