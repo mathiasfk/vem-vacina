@@ -63,12 +63,17 @@ fetch(WORLD_DATA)
         document.querySelector("#vaccination-period").textContent = timespan;
         document.querySelector("#last-available-day").textContent = formatDate(lastData.date);
 
-        plotChart("chart-daily", parsedResults, [
+        plotLineChart("chart-daily", parsedResults, [
             { field:"daily_vaccinations_raw", label:"Vacinações no dia", color:"black" },
-            { field:"daily_vaccinations", label:"Média móvel", color:"green" }
+            { field:"daily_vaccinations", label:"Média móvel", color:"lightslategray" }
         ]);
-        plotChart("chart-total", parsedResults, [
+        plotLineChart("chart-total", parsedResults, [
             { field:"people_vaccinated", label:"Total de vacinados (1ª dose)", color:"black" },
             { field:"people_fully_vaccinated", label:"Total de vacinados (2ª dose)", color:"green" }
         ]);
+        plotBarChart("bar-chart", {
+            "fully_vaccinated" : { label: "Completamente vacinados", value: lastData.people_fully_vaccinated_per_hundred, color: "green"},
+            "vaccinated" : { label: "Parcialmente vacinados", value: lastData.people_vaccinated_per_hundred - lastData.people_fully_vaccinated_per_hundred, color: "black"},
+            "non_vaccinated" : { label: "Não vacinados", value: 100 - lastData.people_vaccinated_per_hundred, color: "lightslategray"},
+        });
     });
