@@ -12,6 +12,9 @@ const plotLineChart = function(chartId, data, fields) {
           label: each.label,
           data: getFieldArray(data, each.field),
           borderColor: each.color,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHitRadius: 4
         }))
       },
       options: {

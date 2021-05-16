@@ -68,8 +68,8 @@ fetch(WORLD_DATA)
             { field:"daily_vaccinations", label:"Média móvel", color:"lightslategray" }
         ]);
         plotLineChart("chart-total", parsedResults, [
-            { field:"people_vaccinated", label:"Total de vacinados (1ª dose)", color:"black" },
-            { field:"people_fully_vaccinated", label:"Total de vacinados (2ª dose)", color:"green" }
+            { field:"people_vaccinated", label:"Total de vacinados", color:"black" },
+            { field:"people_fully_vaccinated", label:"Total de completamente vacinados", color:"green" }
         ]);
         plotBarChart("bar-chart", {
             "fully_vaccinated" : { label: "Completamente vacinados", value: lastData.people_fully_vaccinated_per_hundred, color: "green"},
