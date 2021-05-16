@@ -53,19 +53,22 @@ const plotBarChart = function(chartId, data) {
         label: data.fully_vaccinated.label,
         data: [data.fully_vaccinated.value],
         backgroundColor: data.fully_vaccinated.color,
-        stack: 0
+        stack: 0,
+        maxBarThickness: 80
       },
       {
         label: data.vaccinated.label,
         data: [data.vaccinated.value],
         backgroundColor: data.vaccinated.color,
-        stack: 0
+        stack: 0,
+        maxBarThickness: 80
       },
       {
         label: data.non_vaccinated.label,
         data: [data.non_vaccinated.value],
         backgroundColor: data.non_vaccinated.color,
-        stack: 0
+        stack: 0,
+        maxBarThickness: 80
       }
     ]
   };
@@ -83,6 +86,15 @@ const plotBarChart = function(chartId, data) {
             return `${data.datasets[tooltipItem.datasetIndex].label}  ${formatNumber(data.datasets[tooltipItem.datasetIndex].data[0])}%`;
           }
         }
+      },
+      scales:{
+        xAxes: [{
+          ticks:{
+            callback: function(value, index, values) {
+              return value + "%";
+            }
+          }
+        }]
       }
     }
   };
