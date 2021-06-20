@@ -48,10 +48,11 @@ const formatDate = function(dateString) {
     return new Date(dateString + "T00:00:00" + timezone).toLocaleDateString()
 };
 
-fetch(WORLD_DATA)
-    .then(response => response.text())
-    .then(text => {
-        const parsedResults = filterResults(text, LOCATION_NAME);
+const processData = (csv, location) => {
+
+        if (!window.cachedCsv) window.cachedCsv = csv;
+
+        const parsedResults = filterResults(csv, location);
 
         const firstData = parsedResults[0];
         const lastData = parsedResults[parsedResults.length - 1];
@@ -63,17 +64,32 @@ fetch(WORLD_DATA)
         document.querySelector("#vaccination-period").textContent = timespan;
         document.querySelector("#last-available-day").textContent = formatDate(lastData.date);
 
-        plotLineChart("chart-daily", parsedResults, [
+        if (window.chartDaily) window.chartDaily.destroy();
+        window.chartDaily = plotLineChart("chart-daily", parsedResults, [
             { field:"daily_vaccinations_raw", label:"Vacinações no dia", color:"black" },
             { field:"daily_vaccinations", label:"Média móvel", color:"lightslategray" }
         ]);
-        plotLineChart("chart-total", parsedResults, [
+        if (window.chartTotal) window.chartTotal.destroy();
+        window.chartTotal = plotLineChart("chart-total", parsedResults, [
             { field:"people_vaccinated", label:"Total de vacinados", color:"black" },
             { field:"people_fully_vaccinated", label:"Total de completamente vacinados", color:"green" }
         ]);
-        plotBarChart("bar-chart", {
+        window.barChart = plotBarChart("bar-chart", {
             "fully_vaccinated" : { label: "Completamente vacinados", value: lastData.people_fully_vaccinated_per_hundred, color: "green"},
             "vaccinated" : { label: "Parcialmente vacinados", value: lastData.people_vaccinated_per_hundred - lastData.people_fully_vaccinated_per_hundred, color: "black"},
             "non_vaccinated" : { label: "Não vacinados", value: 100 - lastData.people_vaccinated_per_hundred, color: "lightslategray"},
         });
+    };
+
+const data = fetch(WORLD_DATA)
+.then(response => response.text())
+.then(csv => processData(csv, LOCATION_NAME))
+
+
+document.onreadystatechange = () => 
+{
+    document.getElementById("country-select").addEventListener("change", e => {
+        const country = e.target.value;
+        processData(window.cachedCsv, country);
     });
+}

@@ -4,7 +4,7 @@ const getFieldArray = function(data, field) {
 
 const plotLineChart = function(chartId, data, fields) {
     const ctx = document.getElementById(chartId).getContext("2d");
-    new Chart(ctx, {
+    return new Chart(ctx, {
       type: "line",
       data: {
         labels: getFieldArray(data,"date"),
@@ -102,5 +102,5 @@ const plotBarChart = function(chartId, data) {
     }
   };
 
-  new Chart(ctx, config);
+  return new Chart(ctx, config);
 };
