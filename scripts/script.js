@@ -85,11 +85,12 @@ const data = fetch(WORLD_DATA)
 .then(response => response.text())
 .then(csv => processData(csv, LOCATION_NAME))
 
+const getSelectText = element => element.options[element.selectedIndex].text;
 
 document.onreadystatechange = () => 
 {
     document.getElementById("country-select").addEventListener("change", e => {
-        const country = e.target.value;
-        processData(window.cachedCsv, country);
+        document.querySelector("#selected-country").textContent = getSelectText(e.target);
+        processData(window.cachedCsv, e.target.value);
     });
 }
