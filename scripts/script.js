@@ -25,12 +25,14 @@ const parseResults = function(row) {
         "total_vaccinations": parseInt(fields[3]),
         "people_vaccinated": parseInt(fields[4]),
         "people_fully_vaccinated": parseInt(fields[5]),
-        "daily_vaccinations_raw": parseInt(fields[6]),
-        "daily_vaccinations": parseInt(fields[7]),
-        "total_vaccinations_per_hundred": parseFloat(fields[8]),
-        "people_vaccinated_per_hundred": parseFloat(fields[9]),
-        "people_fully_vaccinated_per_hundred": parseFloat(fields[10]),
-        "daily_vaccinations_per_million": parseFloat(fields[11]),
+        "total_boosters": parseInt(fields[6]),
+        "daily_vaccinations_raw": parseInt(fields[7]),
+        "daily_vaccinations": parseInt(fields[8]),
+        "total_vaccinations_per_hundred": parseFloat(fields[9]),
+        "people_vaccinated_per_hundred": parseFloat(fields[10]),
+        "people_fully_vaccinated_per_hundred": parseFloat(fields[11]),
+        "total_boosters_per_hundred": parseFloat(fields[12]),
+        "daily_vaccinations_per_million": parseFloat(fields[13]),
     };
 };
 
