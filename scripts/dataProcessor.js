@@ -21,7 +21,13 @@ const processData = (csv, location) => {
     const parsedResults = filterAndParseResults(csv, location);
 
     const firstData = parsedResults[0];
-    const lastData = parsedResults[parsedResults.length - 1];
+    let lastData;
+    let lastValidIndex = parsedResults.length - 1;
+    do {
+        lastData = parsedResults[lastValidIndex--];
+    }
+    while(isNaN(lastData.people_fully_vaccinated_per_hundred)
+        || isNaN(lastData.people_vaccinated_per_hundred));
 
     const timespan = daysBetween(firstData.date, lastData.date);
 
@@ -40,6 +46,7 @@ const processData = (csv, location) => {
         { field:"people_vaccinated", label:"Total de vacinados", color:"black" },
         { field:"people_fully_vaccinated", label:"Total de completamente vacinados", color:"green" }
     ]);
+
     window.barChart = plotBarChart("bar-chart", {
         "fully_vaccinated" : { label: "Completamente vacinados", value: lastData.people_fully_vaccinated_per_hundred, color: "green"},
         "vaccinated" : { label: "Parcialmente vacinados", value: lastData.people_vaccinated_per_hundred - lastData.people_fully_vaccinated_per_hundred, color: "black"},
